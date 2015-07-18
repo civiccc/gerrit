@@ -16,6 +16,7 @@ module Gerrit
     def handle(ex)
       case ex
       when Errors::UsageError
+        ui.error ex.message
         CLI::ExitCodes::USAGE
       when Errors::ConfigurationError
         ui.error ex.message
