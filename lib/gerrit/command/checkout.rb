@@ -2,10 +2,17 @@ module Gerrit::Command
   # Check out a patchset locally.
   class Checkout < Base
     def execute
-      result = spawn(%W[git fetch #{repo.remote_url} #{change_refspec}])
-      if result.success?
-        spawn(%w[git checkout FETCH_HEAD])
+      refspec = change_refspec
+
+      ui.spinner('Fetching patchset...') do
+        result = spawn(%W[git fetch #{repo.remote_url} #{refspec}])
+        if result.success?
+          spawn(%w[git checkout FETCH_HEAD])
+        end
       end
+
+      ui.newline
+      ui.success "You have checked out #{refspec}"
     end
 
     private
@@ -31,7 +38,9 @@ module Gerrit::Command
           ui.ask('Enter change number or Change-ID').argument(:required).read_string
         end
 
-      client.change(change_num_or_id)
+      ui.spinner('Finding latest patchset...') do
+        client.change(change_num_or_id)
+      end
     end
   end
 end
