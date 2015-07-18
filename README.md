@@ -2,8 +2,13 @@
 
 [![Gem Version](https://badge.fury.io/rb/gerrit.svg)](http://badge.fury.io/rb/gerrit)
 
-`gerrit` is Ruby-based tool to make the code review process of working with
-[Gerrit](https://code.google.com/p/gerrit/) quicker.
+`gerrit` is Ruby-based tool to make the process of working with
+[Gerrit](https://code.google.com/p/gerrit/) from the command line more
+pleasant.
+
+It is not intended to be used in scripts. Rather, it is intended to reduce the
+number of occasions you need to visit Gerrit in a browser by providing powerful
+CLI shortcuts.
 
 * [Requirements](#requirements)
 * [Installation](#installation)
@@ -71,6 +76,137 @@ push_remote: gerrit
 # the memberships of all that user's groups in order to find potential matches.
 user_search_groups:
   - 'Registered Users'
+```
+
+## Usage
+
+All commands are of the form `gerrit command`, where `command` is from the list
+below:
+
+### `checkout [change]`
+
+Checks out the latest patchset of a change locally.
+
+```
+> gerrit checkout 1337
+
+Finding latest patchset...
+Fetching patchset...
+You have checked out refs/changes/37/1337/2
+```
+
+`change` can be a Change-Id or a change number (i.e. the value in the URL). If
+you don't specify on the command line you'll be asked for one.
+
+### `groups`
+
+Lists all groups visible to you.
+
+```
+> gerrit groups
+
+Backend Team
+Engineering
+Web Team
+```
+
+### `help`
+
+Displays usage information.
+
+```
+> gerrit help
+
+Usage: gerrit [command]
+...
+```
+
+### `members [regex]`
+
+Lists all members in the specified group, including their username, full name,
+and email.
+
+```
+> gerrit members eng`
+
+┌──┬─────────────┬─────────────┬─────────────────────────┐
+│ID│Username     │Name         │Email                    │
+├──┼─────────────┼─────────────┼─────────────────────────┤
+│8 │john.doe     │John Doe     │john.doe@example.com     │
+│1 │joe.smith    │Joe Smith    │joe.smith@example.com    │
+│12│dave.michaels│Dave Michaels│dave.michaels@example.com│
+└──┴─────────────┴─────────────┴─────────────────────────┘
+```
+
+### `projects`
+
+Lists all projects visible to you.
+
+```
+> gerrit projects
+
+All-Users
+helper-scripts
+my-application
+```
+
+This is a light wrapper around the underlying `ls-projects` Gerrit SSH command.
+See its [documentation](https://gerrit-review.googlesource.com/Documentation/cmd-ls-projects.html)
+for examples of additional flags you can specify.
+
+### `push [ref] [reviewer reviewer ...]`
+
+Pushes one or more commits for review.
+
+```
+> gerrit push
+
+Target branch (default master):
+master
+Are you pushing this as a draft? (y/n)[n] n
+Topic name (optional; enter * to autofill with your current branch):
+my-topic-branch
+Enter users/groups you would like to review your changes:
+backend dave
+```
+
+When entering users/groups, the `push` command will split by spaces and treat
+each chunk as a regex. It will then first see if that regex matches any groups,
+and if it does return users from those groups. Otherwise, it will check if it
+matches any users, pull users from the groups specified in your
+`user_search_groups` configuration option, and returning any users that match.
+
+This ultimately makes it very easy to add reviewers without having to type
+their full username.
+
+Specifying a `ref` and one or more `reviewer`s on the command line will bypass
+the prompts, accepting defaults.
+
+### `setup [project-name]`
+
+Configures the repository's remotes to push/pull to/from the Gerrit server
+specified in your `~/.gerrit.yaml` configuration.
+
+```
+> gerrit setup
+
+The following remotes already exist and will be replaced:
+origin
+
+Replace them? (y/n)[n] y
+Added origin ssh://john.doe@gerrit.example.com:29418/helper-scripts.git
+Added gerrit ssh://john.doe@gerrit.example.com:29418/helper-scripts.git
+Added github git@github.com:example-org/helper-scripts.git
+
+You can now push commits for review by running: gerrit push
+```
+
+### `version`
+
+Displays the version of this client.
+
+```
+> gerrit version
 ```
 
 ## License
