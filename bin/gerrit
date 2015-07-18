@@ -1,0 +1,7 @@
+#!/usr/bin/env ruby
+
+require 'gerrit/cli'
+
+input = Gerrit::Input.new(STDIN)
+output = Gerrit::Output.new(STDOUT)
+exit Gerrit::CLI.new(input: input, output: output).run(ARGV)

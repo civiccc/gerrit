@@ -1,0 +1,15 @@
+gemfile: Gemfile
+
+PreCommit:
+  HardTabs:
+    enabled: true
+
+  RuboCop:
+    enabled: true
+    command: ['bundle', 'exec', 'rubocop']
+
+  TrailingWhitespace:
+    enabled: true
+
+  YamlSyntax:
+    enabled: true
