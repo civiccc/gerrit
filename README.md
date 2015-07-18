@@ -26,4 +26,4 @@ to create that file for you.
 
 ## License
 
-This project is released under the [MIT license](MIT-LICENSE).
+This project is released under the [MIT license](LICENSE.md).
