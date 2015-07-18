@@ -2,6 +2,10 @@ module Gerrit::Command
   # Push one or more commits for review.
   class Push < Base
     def execute
+      # Sanity check: does this repository have a valid remote_url?
+      # (this will raise an exception if that's not the case)
+      remote_url = repo.remote_url
+
       # If an explicit ref is given, skip a bunch of the questions
       if commit_hash?(arguments[1]) || arguments[1] == 'HEAD'
         ref = arguments[1]
@@ -19,13 +23,13 @@ module Gerrit::Command
 
       reviewers = extract_reviewers(reviewer_args)
 
-      push_changes(ref, reviewers, target_branch, type, topic)
+      push_changes(remote_url, ref, reviewers, target_branch, type, topic)
     end
 
     private
 
-    def push_changes(ref, reviewers, target_branch, type, topic)
-      command = %W[git push #{repo.remote_url}]
+    def push_changes(remote_url, ref, reviewers, target_branch, type, topic)
+      command = %W[git push #{remote_url}]
 
       if reviewers.any?
         reviewer_flags = reviewers.map { |reviewer| "--reviewer=#{reviewer}" }
