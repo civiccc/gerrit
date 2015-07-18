@@ -67,14 +67,5 @@ module Gerrit
     def remote_url
       "ssh://#{@config[:user]}@#{@config[:host]}:#{@config[:port]}/#{project}"
     end
-
-    # Returns the refspec for the given change number.
-    def ref_for_change(change_number)
-      # Gerrit takes the last two digits of the change number to nest under a
-      # directory with that name so they don't exceed the per-directory file limit
-      prefix = change_number.rjust(2, '0').to_s[-2..-1]
-
-      "refs/changes/#{prefix}/#{change_number}"
-    end
   end
 end

@@ -1,3 +1,5 @@
+require 'json'
+
 module Gerrit
   # Client for executing commands against the Gerrit server.
   class Client
@@ -20,7 +22,7 @@ module Gerrit
 
       result = Subprocess.spawn(ssh_cmd)
       unless result.success?
-        raise Errors::CommandError,
+        raise Errors::GerritCommandFailedError,
               "Command `#{ssh_cmd.join(' ')}` failed:\n" \
               "STATUS: #{result.status}\n" \
               "STDOUT: #{result.stdout.inspect}\n" \
@@ -46,6 +48,20 @@ module Gerrit
       flags = []
       flags << '--recursive' if recursive
       execute(%w[ls-members] + ["'#{group}'"] + flags)
+    end
+
+    # Returns basic information about a change.
+    def change(change_id_or_number)
+      rows = execute(%W[query --format=JSON
+                        --current-patch-set
+                        change:#{change_id_or_number}]).split("\n")[0..-2]
+
+      if rows.empty?
+        raise Errors::CommandFailedError,
+              "No change matches the id '#{change_id_or_number}'"
+      else
+        JSON.parse(rows.first)
+      end
     end
   end
 end

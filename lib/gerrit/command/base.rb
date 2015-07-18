@@ -52,6 +52,9 @@ module Gerrit::Command
     end
 
     # Execute a process and return the result including status and output.
+    #
+    # @param args [Array<String>]
+    # @return [#status, #stdout, #stderr]
     def spawn(args)
       Subprocess.spawn(args)
     end

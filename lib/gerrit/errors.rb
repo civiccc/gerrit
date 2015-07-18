@@ -21,6 +21,9 @@ module Gerrit::Errors
   # Raised when invalid/non-existent command was used.
   class CommandInvalidError < UsageError; end
 
+  # Raised when remote Gerrit command returned a non-zero exit status.
+  class GerritCommandFailedError < GerritError; end
+
   # Raised when run in a directory not part of a valid git repository.
   class InvalidGitRepo < UsageError; end
 end
