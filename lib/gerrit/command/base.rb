@@ -58,7 +58,7 @@ module Gerrit::Command
     # @param args [Array<String>]
     # @return [#status, #stdout, #stderr]
     def spawn(args)
-      Subprocess.spawn(args)
+      Gerrit::Subprocess.spawn(args)
     end
   end
 end

@@ -42,10 +42,16 @@ module Gerrit::Command
 
       result =
         ui.spinner('Pushing changes...') do
-          execute(command)
+          spawn(command)
         end
 
-      ui.print(result)
+      if result.success?
+        ui.success result.stdout
+        ui.success result.stderr
+      else
+        ui.error result.stdout
+        ui.error result.stderr
+      end
     end
 
     def extract_reviewers(reviewer_args)
