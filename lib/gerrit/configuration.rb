@@ -23,7 +23,9 @@ module Gerrit
           from_file(config_file)
         else
           raise Errors::ConfigurationMissingError,
-                'No configuration file was found'
+                "No configuration file '#{FILE_NAME}' was found in the " \
+                "current directory or any ancestor directory.\n\n" \
+                "See #{REPO_URL}#configuration for instructions on setting up."
         end
       end
 
