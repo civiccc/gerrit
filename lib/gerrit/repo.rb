@@ -72,12 +72,42 @@ module Gerrit
     #
     # @return [String]
     def project
-      @config[:project] || File.basename(root)
+      if url = remote_url
+        File.basename(url[/\/[^\/]+$/], '.git')
+      else
+        # Otherwise just use the name of this repository
+        File.basename(root)
+      end
+      #
+    end
+
+    # Returns all remotes this repository has configured.
+    #
+    # @return [Hash] hash of remote names mapping to their URLs
+    def remotes
+      Hash[
+        `git config --get-regexp '^remote\..+\.url$'`.split("\n").map do |line|
+          match = line.match(/^remote\.(?<name>\S+)\.url\s+(?<url>.*)/)
+          [match[:name], match[:url]]
+        end
+      ]
     end
 
     # Returns the Gerrit remote URL for this repo.
     def remote_url
-      "ssh://#{@config[:user]}@#{@config[:host]}:#{@config[:port]}/#{project}"
+      unless push_remote = @config[:push_remote]
+        raise Errors::ConfigurationInvalidError,
+              'You must specify the `push_remote` option in your configuration.'
+      end
+
+      unless url = remotes[push_remote]
+        raise Errors::ConfigurationInvalidError,
+              "The '#{push_remote}' `push_remote` specified in your " \
+              'configuration is not a remote in this repository. ' \
+              'Have you run `gerrit setup`?'
+      end
+
+      url
     end
   end
 end

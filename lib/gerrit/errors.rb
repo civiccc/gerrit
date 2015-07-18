@@ -12,6 +12,9 @@ module Gerrit::Errors
   # Base class for all configuration-related errors.
   class ConfigurationError < GerritError; end
 
+  # Raised when something is incorrect with the configuration.
+  class ConfigurationInvalidError < ConfigurationError; end
+
   # Raised when a configuration file is not present.
   class ConfigurationMissingError < ConfigurationError; end
 
