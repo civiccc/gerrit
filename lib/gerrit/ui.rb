@@ -90,6 +90,22 @@ module Gerrit
       print('')
     end
 
+    # Execute a command with a spinner animation until it completes.
+    def spinner(*args, &block)
+      spinner = TTY::Spinner.new(*args)
+      spinner_thread = Thread.new do
+        loop do
+          sleep 0.1
+          spinner.spin
+        end
+      end
+
+      block.call
+    ensure
+      spinner_thread.kill
+      ui.newline # Ensure next line of ouptut on separate line from spinner
+    end
+
     # Prints a table.
     #
     # Customize the table by passing a block and operating on the table object
