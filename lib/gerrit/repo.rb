@@ -8,6 +8,18 @@ module Gerrit
       @config = config
     end
 
+    # Returns the name of the currently checked-out branch or the branch the
+    # specified ref is on.
+    #
+    # Returns nil if it is detached.
+    #
+    # @return [String, nil]
+    def branch(ref = 'HEAD')
+      name = `git branch`.split("\n").grep(/^\* /).first[/\w+/]
+      # Check if detached head
+      name.start_with?('(') ? nil : name
+    end
+
     # Returns the absolute path to the root of the current repository the
     # current working directory resides within.
     #
