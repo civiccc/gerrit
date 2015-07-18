@@ -40,7 +40,12 @@ module Gerrit::Command
       destination_ref += "/#{topic}" if topic
       command += ["#{ref}:#{destination_ref}"]
 
-      execute(command)
+      result =
+        ui.spinner('Pushing changes...') do
+          execute(command)
+        end
+
+      ui.print(result)
     end
 
     def extract_reviewers(reviewer_args)
