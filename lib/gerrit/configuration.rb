@@ -68,9 +68,17 @@ module Gerrit
     # Access the configuration as if it were a hash.
     #
     # @param key [String, Symbol]
-    # @return [Array,Hash,Number,String]
+    # @return [Array, Hash, Number, String]
     def [](key)
       @options[key.to_s]
+    end
+
+    # Access the configuration as if it were a hash.
+    #
+    # @param key [String, Symbol]
+    # @return [Array, Hash, Number, String]
+    def fetch(key, *args)
+      @options.fetch(key.to_s, *args)
     end
 
     # Compares this configuration with another.

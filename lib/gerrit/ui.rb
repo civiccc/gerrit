@@ -103,7 +103,7 @@ module Gerrit
       block.call
     ensure
       spinner_thread.kill
-      ui.newline # Ensure next line of ouptut on separate line from spinner
+      newline # Ensure next line of ouptut on separate line from spinner
     end
 
     # Prints a table.

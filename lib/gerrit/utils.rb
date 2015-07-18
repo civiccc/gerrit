@@ -1,3 +1,5 @@
+require 'parallel'
+
 module Gerrit
   # A miscellaneous set of utility functions.
   module Utils
@@ -11,6 +13,24 @@ module Gerrit
       string.split(/_|-| /)
             .map { |part| part.sub(/^\w/) { |c| c.upcase } }
             .join
+    end
+
+    # Returns whether a string appears to be a commit SHA1 hash.
+    #
+    # @param string [String]
+    # @return [Boolean]
+    def commit_hash?(string)
+      string =~ /^\h{7,40}$/
+    end
+
+    # Executing a block on each item in parallel.
+    #
+    # @param items [Enumerable]
+    # @return [Array]
+    def map_in_parallel(items, &block)
+      Parallel.map(items, in_threads: Parallel.processor_count) do |item|
+        block.call(item)
+      end
     end
 
     # Convert string containing camel case or spaces into snake case.

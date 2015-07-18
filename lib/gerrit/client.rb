@@ -69,5 +69,21 @@ module Gerrit
         JSON.parse(rows.first)
       end
     end
+
+    # Returns a list of all users to include in the default search scope.
+    #
+    # Gerrit doesn't actually have an endpoint to return all visible users, so
+    # we do the next best thing which is to get users for all groups the user is
+    # a part of, which for all practical purposes is probably good enough.
+    #
+    # Set the `user_search_groups` configuration option to speed this up,
+    # ideally to just one group so we don't have to make parallel calls.
+    def users
+      search_groups = Array(@config.fetch(:user_search_groups, groups))
+
+      Utils.map_in_parallel(search_groups) do |group|
+        group_members(group).map{ |user| user[:username] }
+      end.flatten.uniq
+    end
   end
 end

@@ -5,6 +5,8 @@ module Gerrit::Command
   #
   # @abstract
   class Base
+    include Gerrit::Utils
+
     # @param config [Gerrit::Configuration]
     # @param ui [Gerrit::UI]
     # @param arguments [Array<String>]
