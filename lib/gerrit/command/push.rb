@@ -100,8 +100,8 @@ module Gerrit::Command
                 .argument(:required)
                 .default('n')
                 .modify(:downcase)
-                .validate(/y|n/)
-                .read_char
+                .validate(/^y|n/)
+                .read_string
 
       draft == 'y' ? 'draft' : 'publish'
     end
