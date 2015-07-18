@@ -127,7 +127,7 @@ Lists all members in the specified group, including their username, full name,
 and email.
 
 ```
-> gerrit members eng`
+> gerrit members eng
 
 ┌──┬─────────────┬─────────────┬─────────────────────────┐
 │ID│Username     │Name         │Email                    │
@@ -172,12 +172,14 @@ backend dave
 
 When entering users/groups, the `push` command will split by spaces and treat
 each chunk as a regex. It will then first see if that regex matches any groups,
-and if it does return users from those groups. Otherwise, it will check if it
-matches any users, pull users from the groups specified in your
-`user_search_groups` configuration option, and returning any users that match.
+and if it does return add all users from those groups as reviewers.
+Otherwise, it will pull users from the groups specified in your
+`user_search_groups` configuration option, and return any users that match the
+regex.
 
 This ultimately makes it very easy to add reviewers without having to type
-their full username.
+their full username, and allows you to tag entire teams for pariticularly
+important changes.
 
 Specifying a `ref` and one or more `reviewer`s on the command line will bypass
 the prompts, accepting defaults.
@@ -200,6 +202,10 @@ Added github git@github.com:example-org/helper-scripts.git
 
 You can now push commits for review by running: gerrit push
 ```
+
+Specifying the `project-name` allows you to explicitly name the Gerrit
+project. By default, this will be the name of the git repo itself, so you
+usually won't need to specify this.
 
 ### `version`
 
