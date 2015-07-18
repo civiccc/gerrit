@@ -4,7 +4,13 @@ module Gerrit::Command
   # This allows you to list the members of a group by regex.
   class Members < Base
     def execute
-      ui.print client.members(find_group), newline: false
+      users = client.group_members(find_group)
+
+      ui.table(header: %w[ID Username Name Email]) do |t|
+        users.each do |user|
+          t << [user[:id], user[:username], user[:full_name], user[:email]]
+        end
+      end
     end
 
     private

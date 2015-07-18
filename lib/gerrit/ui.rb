@@ -94,8 +94,8 @@ module Gerrit
     #
     # Customize the table by passing a block and operating on the table object
     # passed to that block to add rows and customize its appearance.
-    def table(&block)
-      t = TTY::Table.new
+    def table(options = {}, &block)
+      t = TTY::Table.new(options)
       block.call(t)
       print(t.render(:unicode))
     end

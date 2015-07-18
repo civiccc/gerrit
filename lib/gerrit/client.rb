@@ -43,11 +43,17 @@ module Gerrit
     #
     # @param group [String] full name of the group
     # @param recursive [Boolean] whether to include members of sub-groups.
-    # @return [Array<String>]
-    def members(group, recursive: true)
+    # @return [Array<Hash>]
+    def group_members(group, recursive: true)
       flags = []
       flags << '--recursive' if recursive
-      execute(%w[ls-members] + ["'#{group}'"] + flags)
+
+      rows = execute(%w[ls-members] + ["'#{group}'"] + flags).split("\n")[1..-1]
+
+      rows.map do |row|
+        id, username, full_name, email = row.split("\t")
+        { id: id, username: username, full_name: full_name, email: email }
+      end
     end
 
     # Returns basic information about a change.
