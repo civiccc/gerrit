@@ -13,6 +13,7 @@ CLI shortcuts.
 * [Requirements](#requirements)
 * [Installation](#installation)
 * [Configuration](#configuration)
+* [Usage](#usage)
 * [License](#license)
 
 ## Requirements
