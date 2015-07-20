@@ -23,6 +23,27 @@ module Gerrit
       string =~ /^\h{7,40}$/
     end
 
+    # Returns the given {Time} as a human-readable string based on that time
+    # relative to the current time.
+    #
+    # @param time [Time]
+    # @return [String]
+    def human_time(time)
+      date = time.to_date
+
+      if date == Date.today
+        time.strftime('%l:%M %p')
+      elsif date == Date.today - 1
+        'Yesterday'
+      elsif date > Date.today - 7
+        time.strftime('%A') # Sunday
+      elsif date.year == Date.today.year
+        time.strftime('%b %e') # Jun 22
+      else
+        time.strftime('%b %e, %Y') # Jun 22, 2015
+      end
+    end
+
     # Executing a block on each item in parallel.
     #
     # @param items [Enumerable]
