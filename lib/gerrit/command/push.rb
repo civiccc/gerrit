@@ -10,15 +10,15 @@ module Gerrit::Command
       if commit_hash?(arguments[1]) || arguments[1] == 'HEAD'
         ref = arguments[1]
         reviewer_args = arguments[2..-1] || []
-        target_branch = 'master'
         type = 'publish'
         topic = nil
+        target_branch = 'master'
       else
         ref = 'HEAD'
         reviewer_args = arguments[1..-1] || []
-        target_branch = ask_target_branch
         type = ask_review_type
         topic = ask_topic
+        target_branch = ask_target_branch
       end
 
       reviewers = extract_reviewers(reviewer_args)
@@ -128,6 +128,5 @@ module Gerrit::Command
       topic = repo.branch('HEAD') if topic == '*'
       topic.strip.empty? ? nil : topic
     end
-
   end
 end
