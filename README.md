@@ -27,9 +27,9 @@ gem install gerrit
 ```
 
 Run `gerrit setup` from the command line to perform the initial setup. `gerrit`
-will automatically detect if you have a configuration (`.gerrit.yaml`) in the
-current working directory or any of its ancestors, taking the first one it
-finds.
+will automatically detect if you have a configuration ([`.gerrit.yaml`](#configuration))
+in the current working directory or any of its ancestors, taking the first one
+it finds.
 
 ## Configuration
 
@@ -54,20 +54,17 @@ remotes:
   # initially (though you'll need to give the respective user force-push permissions)
   origin:
     url: ssh://%{user}@%{host}:%{port}/%{project}.git
-    fetch: +refs/heads/*:refs/remotes/origin/*
     push: HEAD:refs/heads/master
   # Used for pushing commits out for review.
   # While you should use `gerrit push`, this allows you to run `git push gerrit`.
   gerrit:
     url: ssh://%{user}@%{host}:%{port}/%{project}.git
-    fetch: +refs/heads/*:refs/remotes/gerrit/*
     push: HEAD:refs/publish/master
   # Used to pull down from a repo mirror--in this example GitHub.
   # This is mostly to check that replication from Gerrit to the mirror is working.
   # You should not be pushing to this directly (hence why it has no push spec).
   github:
-    url: git@github.com:brigade/%{project}.git
-    fetch: +refs/heads/*:refs/remotes/github/*
+    url: git@github.com:my-organization/%{project}.git
 
 # Use this remote (from the list above) to push commits out for review
 push_remote: gerrit
