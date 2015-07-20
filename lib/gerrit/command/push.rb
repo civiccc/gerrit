@@ -23,6 +23,21 @@ module Gerrit::Command
 
       reviewers = extract_reviewers(reviewer_args)
 
+      if reviewers.size > 3
+        ui.newline
+        ui.info("You are adding #{reviewers.size} people as reviewers for this change")
+
+        reviewers.each do |username|
+          ui.print username
+        end
+
+        until %w[y n].include?(ui.ask('Is this ok? (y/n) ')
+                                 .argument(:required)
+                                 .modify(:downcase)
+                                 .read_string)
+        end
+      end
+
       push_changes(remote_url, ref, reviewers, target_branch, type, topic)
     end
 
