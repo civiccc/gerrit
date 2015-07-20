@@ -79,7 +79,8 @@ user_search_groups:
 ## Usage
 
 All commands are of the form `gerrit command`, where `command` is from the list
-below:
+below. By not specifying any command, the default is to run `gerrit list`,
+which displays all currently open changes.
 
 ### `checkout [change]`
 
