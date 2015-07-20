@@ -79,15 +79,21 @@ module Gerrit::Command
 
       return [] if reviewer_args.empty?
 
-      ui.spinner('Finding matching users/groups...') do
-        extract_users(reviewer_args)
-      end
+      extract_users(reviewer_args)
     end
 
     def extract_users(reviewer_args)
       usernames = []
-      groups = client.groups
-      users = client.users
+      groups = nil
+      users = nil
+
+      # HACK: We wrap these slow calls in a spinner since other parts of this
+      # helper can prompt for input, which doesn't play well with the spinner
+      # animation.
+      ui.spinner('Finding matching users/groups...') do
+        groups = client.groups
+        users = client.users
+      end
 
       reviewer_args.each do |arg|
         users_or_groups = arg.split(/\s*,\s*|\s+/)
@@ -106,7 +112,27 @@ module Gerrit::Command
       # Don't scan users since we already matched a group
       return group_users if group_users.any?
 
-      users.grep(/#{pattern}/i)
+      matching_users = users.grep(/#{pattern}/i)
+
+      # If more than one match for an individual user, confirm which one.
+      if matching_users.size >= 2
+        ui.info("Multiple users match the pattern '#{pattern}':")
+        matching_users.each_with_index do |username, index|
+          ui.print "#{index + 1}. #{username}"
+        end
+
+        while matching_users.size >= 2
+          index = ui.ask('Enter the number of the user you meant: ')
+                    .argument(:required)
+                    .read_int
+
+          if index > 0 && index <= matching_users.size
+            matching_users = [matching_users[index - 1]]
+          end
+        end
+      end
+
+      matching_users
     end
 
     def users_from_group(groups, group)
