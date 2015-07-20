@@ -96,6 +96,24 @@ You have checked out refs/changes/37/1337/2
 `change` can be a Change-Id or a change number (i.e. the value in the URL). If
 you don't specify on the command line you'll be asked for one.
 
+### `console`
+
+Opens a [Pry](http://pryrepl.org/) development console.
+
+```
+> gerrit console
+
+    6: def execute
+    7:   require 'pry'
+ => 8:   binding.pry
+    9: end
+
+#<Gerrit::Command::Console> »
+```
+
+This is useful for testing client calls when writing new commands by allowing
+you to run code within the context of a command's `execute` method.
+
 ### `groups`
 
 Lists all groups visible to you.

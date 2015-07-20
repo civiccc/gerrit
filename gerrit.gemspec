@@ -22,5 +22,6 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'childprocess', '~> 0.5.6'
   s.add_dependency 'parallel', '~> 1.6.0'
+  s.add_dependency 'pry', '~> 0.10'
   s.add_dependency 'tty', '~> 0.2.0'
 end
