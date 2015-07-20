@@ -56,7 +56,7 @@ module Gerrit::Command
 
     def extract_reviewers(reviewer_args)
       if reviewer_args.empty?
-        reviewer_args = ui.ask('Enter users/groups you would like to review your changes')
+        reviewer_args = ui.ask('Enter users/groups you would like to review your changes: ')
                           .argument(:required)
                           .read_string
                           .split(/\s*,\s*/)
@@ -103,7 +103,7 @@ module Gerrit::Command
     end
 
     def ask_target_branch
-      target = ui.ask('Target branch (default master)')
+      target = ui.ask('Target branch [master] ')
                  .modify(:trim)
                  .read_string
 
@@ -111,7 +111,7 @@ module Gerrit::Command
     end
 
     def ask_review_type
-      draft = ui.ask('Are you pushing this as a draft? (y/n) [n]')
+      draft = ui.ask('Are you pushing this as a draft? (y/n) [n] ')
                 .argument(:required)
                 .default('n')
                 .modify(:downcase)
@@ -121,7 +121,7 @@ module Gerrit::Command
     end
 
     def ask_topic
-      topic = ui.ask('Topic name (optional; enter * to autofill with your current branch:')
+      topic = ui.ask('Enter topic name (optional; enter * to use current branch name) ')
                 .argument(:optional)
                 .read_string
 
