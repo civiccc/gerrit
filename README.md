@@ -137,6 +137,30 @@ Usage: gerrit [command]
 ...
 ```
 
+### `list [query]`
+
+List all changes matching the given query.
+
+```
+> gerrit list "status:open AND project:brigade"
+
+┌────┬────┬───┬───────────────────────────┬─────────────────┬────────────────┬───────────┐
+│ #  │ CR │ V │ Subject                   │ Owner           │ Project        │   Updated │
+├────┼────┼───┼───────────────────────────┼─────────────────┼────────────────┼───────────┤
+│ 3  │ ✕  │ ✓ │ Add test script           │ Dave Michaels   │ helper-scripts │ Yesterday │
+│ 2  │    │ ✕ │ Implement adapter pattern │ Joe Smith       │ common-libs    │   9:20 AM │
+│ 1  │ ✓  │ ✓ │ Remove unused scripts     │ John Doe        │ helper-scripts │  11:15 AM │
+└────┴────┴───┴───────────────────────────┴─────────────────┴────────────────┴───────────┘
+```
+
+The list is sorted by oldest to most recent so that newer entries are at the
+bottom of the list. This makes the UI work better in console environments,
+since long lists would require you to scroll to the top of the list every time.
+
+Specifying `query` allows you to filter the results further. By specifying no
+query it will display all open changes (i.e. the query defaults to
+`status:open`).
+
 ### `members [regex]`
 
 Lists all members in the specified group, including their username, full name,

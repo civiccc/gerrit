@@ -44,8 +44,8 @@ module Gerrit
     # @param arguments [Array<String>]
     # @raise [Gerrit::Errors::GerritError] when any exceptional circumstance occurs
     def run_command(config, arguments)
-      # Display help documentation by default
-      arguments = ['help'] if arguments.empty?
+      # Display all open changes by default
+      arguments = ['list'] if arguments.empty?
 
       command_class = find_command(arguments)
       command_class.new(config, @ui, arguments).run

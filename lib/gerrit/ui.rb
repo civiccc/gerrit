@@ -113,7 +113,7 @@ module Gerrit
     def table(options = {}, &block)
       t = TTY::Table.new(options)
       block.call(t)
-      print(t.render(:unicode))
+      print(t.render(:unicode, options))
     end
   end
 end

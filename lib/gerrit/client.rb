@@ -70,6 +70,15 @@ module Gerrit
       end
     end
 
+    def query_changes(query)
+      rows = execute(%W[query
+                        --format=JSON
+                        --current-patch-set
+                        --submit-records] + [query]).split("\n")[0..-2]
+
+      rows.map { |row| JSON.parse(row) }
+    end
+
     # Returns a list of all users to include in the default search scope.
     #
     # Gerrit doesn't actually have an endpoint to return all visible users, so
