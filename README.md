@@ -202,13 +202,10 @@ Pushes one or more commits for review.
 ```
 > gerrit push
 
-Target branch (default master):
-master
-Are you pushing this as a draft? (y/n)[n] n
-Topic name (optional; enter * to autofill with your current branch):
-my-topic-branch
-Enter users/groups you would like to review your changes:
-backend dave
+Are you pushing this as a draft? (y/n) [n] n
+Enter topic name (optional; enter * to use current branch branch) my-topic-branch
+Target branch [master] master
+Enter users/groups you would like to review your changes: backend dave
 ```
 
 When entering users/groups, the `push` command will split by spaces and treat
