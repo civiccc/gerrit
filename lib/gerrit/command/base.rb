@@ -7,6 +7,26 @@ module Gerrit::Command
   class Base
     include Gerrit::Utils
 
+    # Create a command from a list of arguments.
+    #
+    # @param config [Gerrit::Configuration]
+    # @param ui [Gerrit::UI]
+    # @param arguments [Array<String>]
+    # @return [Gerrit::Command::Base] appropriate command for the given
+    #   arguments
+    def self.from_arguments(config, ui, arguments)
+      cmd = arguments.first
+
+      begin
+        require "gerrit/command/#{Gerrit::Utils.snake_case(cmd)}"
+      rescue LoadError => ex
+        raise Gerrit::Errors::CommandInvalidError,
+              "`gerrit #{cmd}` is not a valid command"
+      end
+
+      Gerrit::Command.const_get(Gerrit::Utils.camel_case(cmd)).new(config, ui, arguments)
+    end
+
     # @param config [Gerrit::Configuration]
     # @param ui [Gerrit::UI]
     # @param arguments [Array<String>]
@@ -26,6 +46,13 @@ module Gerrit::Command
     # Executes the command given the previously-parsed arguments.
     def execute
       raise NotImplementedError, 'Define `execute` in Command subclass'
+    end
+
+    # Executes another command from the same context as this command.
+    #
+    # @param command_arguments [Array<String>]
+    def execute_command(command_arguments)
+      self.class.from_arguments(config, ui, command_arguments).execute
     end
 
     private

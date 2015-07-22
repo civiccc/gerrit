@@ -47,26 +47,8 @@ module Gerrit
       # Display all open changes by default
       arguments = ['list'] if arguments.empty?
 
-      command_class = find_command(arguments)
-      command_class.new(config, @ui, arguments).run
-    end
-
-    # Finds the {Command} corresponding to the given set of arguments.
-    #
-    # @param [Array<String>] arguments
-    # @return [Class]
-    def find_command(arguments)
-      cmd = arguments.first
-
-      begin
-        require 'gerrit/command/base'
-        require "gerrit/command/#{Utils.snake_case(cmd)}"
-      rescue LoadError => ex
-        raise Errors::CommandInvalidError,
-              "`gerrit #{cmd}` is not a valid command"
-      end
-
-      Command.const_get(Utils.camel_case(cmd))
+      require 'gerrit/command/base'
+      Command::Base.from_arguments(config, @ui, arguments).run
     end
   end
 end
