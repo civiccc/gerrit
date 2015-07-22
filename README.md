@@ -245,6 +245,33 @@ Specifying the `project-name` allows you to explicitly name the Gerrit
 project. By default, this will be the name of the git repo itself, so you
 usually won't need to specify this.
 
+### `submit`
+
+Display a list of submittable changes, allowing you to choose one to submit.
+
+```
+> gerrit submit
+
+┌────┬────┬───┬───────────────────────────┬─────────────────┬────────────────┬───────────┐
+│ #  │ CR │ V │ Subject                   │ Owner           │ Project        │   Updated │
+├────┼────┼───┼───────────────────────────┼─────────────────┼────────────────┼───────────┤
+│ 3  │ ✓  │ ✓ │ Add test script           │ Dave Michaels   │ helper-scripts │ Yesterday │
+│ 2  │ ✓  │ ✓ │ Implement adapter pattern │ Joe Smith       │ common-libs    │   9:20 AM │
+│ 1  │ ✓  │ ✓ │ Remove unused scripts     │ John Doe        │ helper-scripts │  11:15 AM │
+└────┴────┴───┴───────────────────────────┴─────────────────┴────────────────┴───────────┘
+Which change would you like to submit? (1 - 3) 3
+Submitting Add test script (2874)...
+```
+
+By default, "submittable" means any change matching the following query:
+
+```
+is:open label:Code-Review+1 label:Verified+1 NOT label:Code-Review-1 NOT label:Verified-1
+```
+
+If your organization uses different rules for determining whether something is
+submittable, specify the `submittable_changes` option in your configuration.
+
 ### `version`
 
 Displays the version of this client.

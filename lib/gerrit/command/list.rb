@@ -2,11 +2,7 @@ module Gerrit::Command
   # Show a list of changes matching a specified query.
   class List < Base
     def execute
-      # Get changes ordered from newest to oldest
-      changes =
-        ui.spinner('Loading ') do
-          client.query_changes(query).sort_by { |change| -change['lastUpdated'] }
-        end
+      changes = ui.spinner('Loading ') { self.class.find_changes(client, query) }
 
       # Display changes in reverse order so that the newest are at the bottom of
       # the table (i.e. the part that will be visible in a console when there is
@@ -28,6 +24,15 @@ module Gerrit::Command
           t << row
         end
       end
+    end
+
+    # HACK: We cache the results of this since we may want to reuse the result
+    # of the query in other commands (see Command::Submit for an example).
+    # We also make this a public class method so other commands can call it.
+    def self.find_changes(client, search_query)
+      @matching_changes ||= {}
+      @matching_changes[search_query] =
+        client.query_changes(search_query).sort_by { |change| -change['lastUpdated'] }
     end
 
     private
