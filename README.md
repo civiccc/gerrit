@@ -82,6 +82,25 @@ All commands are of the form `gerrit command`, where `command` is from the list
 below. By not specifying any command, the default is to run `gerrit list`,
 which displays all currently open changes.
 
+### `clone [project]`
+
+Clones a Gerrit project, setting up the remotes to push/pull from Gerrit.
+
+```
+> gerrit clone my-project
+
+Cloning my-project from ssh://john.doe@gerrit.example.com:29418/my-project.git...
+my-project successfully cloned into /home/john/src/my-project
+
+Added origin remote ssh://shane.dasilva@code.brigade.com:29418/foghorn.git
+Added gerrit remote ssh://shane.dasilva@code.brigade.com:29418/foghorn.git
+
+You can now push commits for review by running: gerrit push
+```
+
+This command saves you the hassle of remembering the exact remote URL for
+cloning your Gerrit project.
+
 ### `checkout [change]`
 
 Checks out the latest patchset of a change locally.
