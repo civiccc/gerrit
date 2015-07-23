@@ -245,7 +245,7 @@ important changes.
 Specifying a `ref` and one or more `reviewer`s on the command line will bypass
 the prompts, accepting defaults.
 
-### `setup [project-name]`
+### `setup [project]`
 
 Configures the repository's remotes to push/pull to/from the Gerrit server
 specified in your `~/.gerrit.yaml` configuration.
@@ -264,7 +264,7 @@ Added github git@github.com:example-org/helper-scripts.git
 You can now push commits for review by running: gerrit push
 ```
 
-Specifying the `project-name` allows you to explicitly name the Gerrit
+Specifying the `[project]` allows you to explicitly name the Gerrit
 project. By default, this will be the name of the git repo itself, so you
 usually won't need to specify this.
 
