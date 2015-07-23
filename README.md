@@ -86,6 +86,21 @@ All commands are of the form `gerrit command`, where `command` is from the list
 below. By not specifying any command, the default is to run `gerrit list`,
 which displays all currently open changes.
 
+### `checkout [change]`
+
+Checks out the latest patchset of a change locally.
+
+```
+> gerrit checkout 1337
+
+Finding latest patchset...
+Fetching patchset...
+You have checked out refs/changes/37/1337/2
+```
+
+`change` can be a Change-Id or a change number (i.e. the value in the URL). If
+you don't specify on the command line you'll be asked for one.
+
 ### `clone [project]`
 
 Clones a Gerrit project, setting up the remotes to push/pull from Gerrit.
@@ -104,21 +119,6 @@ You can now push commits for review by running: gerrit push
 
 This command saves you the hassle of remembering the exact remote URL for
 cloning your Gerrit project.
-
-### `checkout [change]`
-
-Checks out the latest patchset of a change locally.
-
-```
-> gerrit checkout 1337
-
-Finding latest patchset...
-Fetching patchset...
-You have checked out refs/changes/37/1337/2
-```
-
-`change` can be a Change-Id or a change number (i.e. the value in the URL). If
-you don't specify on the command line you'll be asked for one.
 
 ### `console`
 
