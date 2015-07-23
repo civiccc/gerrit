@@ -86,6 +86,19 @@ All commands are of the form `gerrit command`, where `command` is from the list
 below. By not specifying any command, the default is to run `gerrit list`,
 which displays all currently open changes.
 
+* [checkout](#checkout-change)
+* [clone](#clone-project)
+* [console](#console)
+* [groups](#groups)
+* [help](#help)
+* [list](#list-query)
+* [members](#members-regex)
+* [projects](#projects)
+* [push](#push-ref-reviewer-reviewer-)
+* [setup](#setup-project)
+* [submit](#submit)
+* [version](#version)
+
 ### `checkout [change]`
 
 Checks out the latest patchset of a change locally.
