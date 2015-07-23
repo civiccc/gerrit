@@ -26,10 +26,14 @@ CLI shortcuts.
 gem install gerrit
 ```
 
-Run `gerrit setup` from the command line to perform the initial setup. `gerrit`
-will automatically detect if you have a configuration ([`.gerrit.yaml`](#configuration))
-in the current working directory or any of its ancestors, taking the first one
-it finds.
+Create a [`.gerrit.yaml`](#configuration) configuration file in your home
+directory, following the example outlined in the
+[Configuration](#configuration) section.
+
+Clone your Gerrit project using `gerrit clone <project-name>`. If you're working with
+an existing local repository, you can run `gerrit setup` within your repository
+to set it up to push/pull to/from Gerrit (using the [`.gerrit.yaml`](#configuration)
+file you've set up previously).
 
 ## Configuration
 
