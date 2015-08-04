@@ -158,7 +158,7 @@ module Gerrit::Command
                 .modify(:downcase)
                 .read_string
 
-      draft == 'y' ? 'draft' : 'publish'
+      draft == 'y' ? 'drafts' : 'publish'
     end
 
     def ask_topic
