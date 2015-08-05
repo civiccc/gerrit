@@ -1,6 +1,7 @@
 # Gerrit CLI
 
 [![Gem Version](https://badge.fury.io/rb/gerrit.svg)](http://badge.fury.io/rb/gerrit)
+[![Dependency Status](https://gemnasium.com/sds/gerrit.svg)](https://gemnasium.com/sds/gerrit)
 
 `gerrit` is Ruby-based tool to make the process of working with
 [Gerrit](https://code.google.com/p/gerrit/) from the command line more
