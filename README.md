@@ -125,8 +125,8 @@ Clones a Gerrit project, setting up the remotes to push/pull from Gerrit.
 Cloning my-project from ssh://john.doe@gerrit.example.com:29418/my-project.git...
 my-project successfully cloned into /home/john/src/my-project
 
-Added origin remote ssh://shane.dasilva@code.brigade.com:29418/foghorn.git
-Added gerrit remote ssh://shane.dasilva@code.brigade.com:29418/foghorn.git
+Added origin remote ssh://john.doe@gerrit.example.com:29418/my-project.git
+Added gerrit remote ssh://john.doe@gerrit.example.com:29418/my-project.git
 
 You can now push commits for review by running: gerrit push
 ```
@@ -180,13 +180,13 @@ Usage: gerrit [command]
 List all changes matching the given query.
 
 ```
-> gerrit list "status:open AND project:brigade"
+> gerrit list "status:open AND project:helper-scripts"
 
 ┌────┬────┬───┬───────────────────────────┬─────────────────┬────────────────┬───────────┐
 │ #  │ CR │ V │ Subject                   │ Owner           │ Project        │   Updated │
 ├────┼────┼───┼───────────────────────────┼─────────────────┼────────────────┼───────────┤
 │ 3  │ ✕  │ ✓ │ Add test script           │ Dave Michaels   │ helper-scripts │ Yesterday │
-│ 2  │    │ ✕ │ Implement adapter pattern │ Joe Smith       │ common-libs    │   9:20 AM │
+│ 2  │    │ ✕ │ Implement adapter pattern │ Joe Smith       │ helper-scripts │   9:20 AM │
 │ 1  │ ✓  │ ✓ │ Remove unused scripts     │ John Doe        │ helper-scripts │  11:15 AM │
 └────┴────┴───┴───────────────────────────┴─────────────────┴────────────────┴───────────┘
 ```
