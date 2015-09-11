@@ -31,11 +31,13 @@ module Gerrit::Command
           ui.print username
         end
 
-        until %w[y n].include?(ui.ask('Is this ok? (y/n) ')
-                                 .argument(:required)
-                                 .modify(:downcase)
-                                 .read_string)
+        until %w[y n].include?(answer = ui.ask('Is this ok? (y/n) ')
+                                          .argument(:required)
+                                          .modify(:downcase)
+                                          .read_string)
         end
+
+        return unless answer == 'y'
       end
 
       push_changes(remote_url, ref, reviewers, target_branch, type, topic)
