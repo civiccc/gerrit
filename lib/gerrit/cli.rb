@@ -8,6 +8,7 @@ module Gerrit
     # @see http://www.gsp.com/cgi-bin/man.cgi?section=3&topic=sysexits
     module ExitCodes
       OK          = 0   # Successful execution
+      ERROR       = 1   # Generic error
       USAGE       = 64  # User error (bad command line or invalid input)
       SOFTWARE    = 70  # Internal software error (bug)
       CONFIG      = 78  # Configuration error (invalid file or options)

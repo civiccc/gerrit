@@ -21,6 +21,9 @@ module Gerrit
       when Errors::ConfigurationError
         ui.error ex.message
         CLI::ExitCodes::CONFIG
+      when Errors::GerritCommandFailedError
+        ui.error ex.message
+        CLI::ExitCodes::ERROR
       else
         print_unexpected_exception(ex)
         CLI::ExitCodes::SOFTWARE
