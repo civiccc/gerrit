@@ -1,6 +1,6 @@
 # Gerrit Changelog
 
-## master (unreleased)
+## 0.8.0
 
 * Add `post_setup` configuration option allowing you to define a command to run
   after `gerrit clone` or `gerrit setup` to initialize a repository
