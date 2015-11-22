@@ -1,5 +1,10 @@
 # Gerrit Changelog
 
+## master (unreleased)
+
+* Add `post_setup` configuration option allowing you to define a command to run
+  after `gerrit clone` or `gerrit setup` to initialize a repository
+
 ## 0.7.1
 
 * Fix confirmation for the number of reviewers to not push when user said "n"

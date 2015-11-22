@@ -74,6 +74,14 @@ remotes:
 # Use this remote (from the list above) to push commits out for review
 push_remote: gerrit
 
+# Run this script after running `gerrit setup` or `gerrit clone` to perform
+# some automatic setup (e.g. install git hooks). It is run with the repo root
+# as your working directory. The following example installs Overcommit hooks
+# if an Overcommit configuration file exists.
+# post_setup: ['bash', '-c',
+#   '[ -f .overcommit.yml ] && ((which overcommit >/dev/null || gem install overcommit); overcommit --install)'
+# ]
+
 # Groups to get users from when searching for "all" users. This is necessary
 # when a user could potentially be in many groups, since the tool will check
 # the memberships of all that user's groups in order to find potential matches.

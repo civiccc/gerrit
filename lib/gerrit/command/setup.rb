@@ -42,9 +42,27 @@ module Gerrit::Command
         ui.success "Added #{remote_name} #{remote_url}"
       end
 
+      execute_post_setup_script(Dir.pwd)
+
       ui.newline
       ui.info 'You can now push commits for review by running: ', newline: false
       ui.print 'gerrit push'
+    end
+
+    def execute_post_setup_script(repo_directory)
+      post_setup_cmd = Array(config[:post_setup])
+      return unless post_setup_cmd.any?
+
+      result =
+        ui.spinner('Running post setup script...') do
+          spawn(post_setup_cmd)
+        end
+      if result.success?
+        ui.success(result.stdout.rstrip) unless result.stdout.strip.empty?
+      else
+        ui.error('Failed to run post setup script:')
+        ui.error(result.stdout + result.stderr)
+      end
     end
 
     def render_remote_url(remote_config)
