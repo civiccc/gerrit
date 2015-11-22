@@ -1,3 +1,4 @@
+# Run Overcommit within a Bundler context using this repo's Gemfile
 gemfile: Gemfile
 
 PreCommit:
@@ -11,7 +12,6 @@ PreCommit:
 
   RuboCop:
     enabled: true
-    command: ['bundle', 'exec', 'rubocop']
 
   TrailingWhitespace:
     enabled: true
