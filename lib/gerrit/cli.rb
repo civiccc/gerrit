@@ -56,6 +56,7 @@ module Gerrit
       return ['list'] if arguments.empty?
 
       return ['help'] if %w[-h --help].include?(arguments.first)
+      return ['version'] if %w[-v --version].include?(arguments.first)
 
       arguments
     end

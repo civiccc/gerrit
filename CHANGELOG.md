@@ -6,6 +6,7 @@
   after `gerrit clone` or `gerrit setup` to initialize a repository
 * Don't dump stack trace when Gerrit server returns an error
 * Treat `-h`/`--help` flags the same as `help` command
+* Treat `-v`/`--version` flags the same as `version` command
 
 ## 0.7.1
 
