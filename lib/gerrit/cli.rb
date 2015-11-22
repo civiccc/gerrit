@@ -45,11 +45,19 @@ module Gerrit
     # @param arguments [Array<String>]
     # @raise [Gerrit::Errors::GerritError] when any exceptional circumstance occurs
     def run_command(config, arguments)
-      # Display all open changes by default
-      arguments = ['list'] if arguments.empty?
+      arguments = convert_arguments(arguments)
 
       require 'gerrit/command/base'
       Command::Base.from_arguments(config, @ui, arguments).run
+    end
+
+    def convert_arguments(arguments)
+      # Display all open changes by default
+      return ['list'] if arguments.empty?
+
+      return ['help'] if %w[-h --help].include?(arguments.first)
+
+      arguments
     end
   end
 end

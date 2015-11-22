@@ -10,6 +10,9 @@ module Gerrit::Command
       commands.each do |command|
         ui.print command
       end
+
+      ui.newline
+      ui.info "See #{Gerrit::REPO_URL}#usage for full documentation"
     end
 
     private
