@@ -1,6 +1,6 @@
 # Gerrit Changelog
 
-## master (unreleased)
+## 0.9.0
 
 * Fix Ruby version constraint to >= 2.1 (since this gem uses required keyword
   arguments, introduced in that version)
