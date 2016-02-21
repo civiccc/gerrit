@@ -1,5 +1,10 @@
 # Gerrit Changelog
 
+## master (unreleased)
+
+* Fix Ruby version constraint to >= 2.1 (since this gem uses required keyword
+  arguments, introduced in that version)
+
 ## 0.8.0
 
 * Add `post_setup` configuration option allowing you to define a command to run
