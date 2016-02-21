@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
 
   s.files            = Dir['lib/**/*.rb']
 
-  s.required_ruby_version = '>= 2.0.0'
+  s.required_ruby_version = '>= 2.1'
 
   s.add_dependency 'childprocess', '~> 0.5.6'
   s.add_dependency 'parallel', '~> 1.6.0'
