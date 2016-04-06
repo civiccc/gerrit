@@ -1,5 +1,9 @@
 # Gerrit Changelog
 
+## master (unreleased)
+
+* Relax `parallel` gem constraint from 1.6.x to 1.6+
+
 ## 0.9.0
 
 * Fix Ruby version constraint to >= 2.1 (since this gem uses required keyword
