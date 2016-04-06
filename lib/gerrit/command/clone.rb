@@ -42,6 +42,7 @@ module Gerrit::Command
       project_dir = File.join(Dir.pwd, project)
 
       if result.success?
+        install_change_id_hook(project_dir)
         ui.success("#{project} successfully cloned into #{project_dir}")
         ui.newline
         setup_remotes(project_dir)
@@ -65,6 +66,32 @@ module Gerrit::Command
         # Remove default remote so we can set up Gerrit remotes
         `git remote rm origin`
         execute_command(%w[setup])
+      end
+    end
+
+    def install_change_id_hook(repo_directory)
+      Dir.chdir(repo_directory) do
+        commit_msg_hook_path = File.join(repo.git_dir, 'hooks', 'commit-msg')
+
+        if File.exist?(commit_msg_hook_path)
+          ui.warning('Skipping install of Gerrit Change ID commit-msg hook ' \
+                     "as there is already a #{commit_msg_hook_path} file present")
+          return
+        end
+
+        result = ui.spinner('Downloading Gerrit Change ID commit-msg hook...') do
+          spawn(%W[scp -P #{config[:port]}
+                   #{config[:user]}@#{config[:host]}:hooks/commit-msg
+                   #{commit_msg_hook_path}])
+        end
+
+        if result.success?
+          ui.success('Installed Gerrit Change ID commit-msg hook')
+        else
+          ui.warning('Unable to install Gerrit Change ID commit-msg hook:')
+          ui.error(result.stdout + result.stderr)
+          ui.warning("You won't be able to push your commits to Gerrit without this hook")
+        end
       end
     end
   end
