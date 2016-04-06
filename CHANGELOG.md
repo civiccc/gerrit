@@ -1,6 +1,6 @@
 # Gerrit Changelog
 
-## master (unreleased)
+## 0.10.0
 
 * Relax `parallel` gem constraint from 1.6.x to 1.6+
 * Enhance `gerrit clone` to also install Gerrit Change ID commit-msg hook
