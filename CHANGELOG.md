@@ -1,6 +1,6 @@
 # Gerrit Changelog
 
-## master (unreleased)
+## 0.11.0
 
 * Improve output of `gerrit clone` command to show progress
 
