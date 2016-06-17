@@ -1,5 +1,9 @@
 # Gerrit Changelog
 
+## master (unreleased)
+
+* Improve output of `gerrit clone` command to show progress
+
 ## 0.10.0
 
 * Relax `parallel` gem constraint from 1.6.x to 1.6+

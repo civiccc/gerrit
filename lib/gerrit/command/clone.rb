@@ -34,20 +34,17 @@ module Gerrit::Command
     def clone(remote_url, project)
       p = Pastel.new
 
-      result =
-        ui.spinner("Cloning #{p.magenta(project)} from #{p.cyan(remote_url)}...") do
-          spawn(%W[git clone #{remote_url}])
-        end
-
-      project_dir = File.join(Dir.pwd, project)
-
-      if result.success?
+      ui.info "Cloning #{p.magenta(project)} from #{p.cyan(remote_url)}..."
+      if system("git clone #{remote_url}")
+        project_dir = File.join(Dir.pwd, project)
         install_change_id_hook(project_dir)
+
         ui.success("#{project} successfully cloned into #{project_dir}")
         ui.newline
+
         setup_remotes(project_dir)
       else
-        ui.error(result.stdout + result.stderr)
+        ui.error "Unable to clone #{project}!"
       end
     end
 
