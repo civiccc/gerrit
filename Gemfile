@@ -3,4 +3,4 @@ source 'https://rubygems.org'
 gemspec
 
 gem 'overcommit', '0.34.2'
-gem 'rubocop', '0.40.0'
+gem 'rubocop', '0.41.1'
