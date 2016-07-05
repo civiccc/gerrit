@@ -77,8 +77,8 @@ module Gerrit::Command
     # Allow a project name to be explicitly specified, otherwise just use the
     # repo root directory name.
     def project_name
-      if arguments[2]
-        arguments[2]
+      if arguments[1]
+        arguments[1]
       else
         File.basename(repo.root)
       end

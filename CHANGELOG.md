@@ -1,5 +1,10 @@
 # Gerrit Changelog
 
+## master (unreleased)
+
+* Fix `gerrit setup [project]` invocation not naming git remotes according to
+  the argument.
+
 ## 0.11.0
 
 * Improve output of `gerrit clone` command to show progress
