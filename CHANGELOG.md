@@ -1,6 +1,6 @@
 # Gerrit Changelog
 
-## master (unreleased)
+## 0.11.1
 
 * Fix `gerrit setup [project]` invocation not naming git remotes according to
   the argument.
