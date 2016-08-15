@@ -2,3 +2,6 @@ AllCops:
   TargetRubyVersion: 2.1 # Oldest version of Ruby this gem needs to support
 
 inherit_from: .rubocop_todo.yml
+
+Style/NumericPredicate:
+  Enabled: false
